@@ -1,0 +1,223 @@
+.role-selector-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 50%, #eef6ff 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 40px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  box-sizing: border-box;
+}
+
+/* Header Section */
+.role-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Logo Image Styling */
+.logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-text {
+  letter-spacing: -0.5px;
+}
+
+.header-tagline {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Main Hero Section */
+.role-main-content {
+  max-width: 850px;
+  margin: 30px auto;
+  text-align: center;
+  width: 100%;
+}
+
+.welcome-badge {
+  display: inline-block;
+  background-color: #e0f2fe;
+  color: #0284c7;
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.main-heading {
+  font-size: 40px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.main-heading span {
+  color: #0284c7; /* Logo cyan-blue shade */
+}
+
+.sub-heading {
+  color: #64748b;
+  font-size: 16px;
+  max-width: 580px;
+  margin: 0 auto 40px auto;
+  line-height: 1.5;
+}
+
+/* 2 Cards Grid Layout */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.role-card {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.role-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 30px -4px rgba(2, 132, 199, 0.12);
+  border-color: #38bdf8;
+}
+
+.card-illustration {
+  font-size: 44px;
+  margin-bottom: 20px;
+  background: #f0f9ff;
+  width: 84px;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  border: 1px solid #bae6fd;
+}
+
+.role-card h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.role-card p {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 28px;
+  line-height: 1.5;
+  min-height: 42px;
+}
+
+/* Button Styling */
+.role-btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.role-btn:active {
+  transform: scale(0.98);
+}
+
+.chemist-btn {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.chemist-btn:hover {
+  background: #0369a1;
+}
+
+.patient-btn {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.patient-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Footer Section */
+.role-footer {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  font-size: 14px;
+  color: #475569;
+  font-weight: 600;
+  padding: 16px 0;
+  border-top: 1px solid #e2e8f0;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.footer-feature {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .role-selector-page {
+    padding: 20px;
+  }
+  
+  .header-tagline {
+    display: none;
+  }
+  
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .main-heading {
+    font-size: 32px;
+  }
+  
+  .role-footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+}

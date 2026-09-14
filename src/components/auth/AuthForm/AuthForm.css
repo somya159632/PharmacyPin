@@ -1,0 +1,295 @@
+
+/* Page Layout */
+.auth-form-page {
+  display: flex;
+  min-height: 100vh;
+  background-color: #ffffff;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  box-sizing: border-box;
+}
+
+/* Left Branding Banner */
+.auth-banner {
+  width: 42%;
+  padding: 44px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.chemist-theme {
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+  color: #0369a1;
+}
+
+.patient-theme {
+  background: linear-gradient(135deg, #eff6ff 0%, #bfdbfe 100%);
+  color: #1d4ed8;
+}
+
+/* Back Link & Logo Header */
+.back-link {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.2s ease;
+}
+
+.back-link:hover {
+  opacity: 0.8;
+}
+
+.banner-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+}
+
+/* Banner Content Body */
+.banner-content h1 {
+  font-size: 34px;
+  font-weight: 800;
+  margin: 12px 0;
+  color: #0f172a;
+  line-height: 1.25;
+}
+
+.banner-content p {
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.55;
+  margin-bottom: 28px;
+}
+
+.banner-features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feature-item {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.banner-footer {
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+/* Right Form Side Container */
+.auth-form-container {
+  width: 58%;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 580px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.form-header h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.form-subtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Toggle Switch (Sign Up vs Login) */
+.tab-toggle {
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 10px;
+  display: flex;
+  gap: 4px;
+}
+
+.tab-toggle button {
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: #64748b;
+  transition: all 0.2s ease;
+}
+
+.tab-toggle button.active {
+  background: #ffffff;
+  color: #0284c7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Input Fields Styling */
+.actual-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-group input {
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #cbd5e1;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+}
+
+/* Form Action Buttons */
+.submit-btn {
+  margin-top: 8px;
+  padding: 13px;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.submit-btn:active {
+  transform: scale(0.99);
+}
+
+.chemist-submit {
+  background: #0284c7;
+}
+
+.chemist-submit:hover {
+  background: #0369a1;
+}
+
+.patient-submit {
+  background: #2563eb;
+}
+
+.patient-submit:hover {
+  background: #1d4ed8;
+}
+
+/* Divider Line */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 6px 0 2px 0;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.divider span {
+  padding: 0 10px;
+}
+
+/* Guest Button Styling */
+.guest-btn {
+  width: 100%;
+  padding: 11px;
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.guest-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #94a3b8;
+}
+
+/* Responsive Styles for Mobile & Tablet */
+@media (max-width: 900px) {
+  .auth-form-page {
+    flex-direction: column;
+  }
+  
+  .auth-banner, 
+  .auth-form-container {
+    width: 100%;
+    padding: 24px;
+  }
+
+  .banner-content h1 {
+    font-size: 28px;
+  }
+
+  .form-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+

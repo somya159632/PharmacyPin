@@ -1,0 +1,515 @@
+<!-- <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pharmacy-finder</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediFlow Pro - Advanced Pharmacy Management</title>
+    <style>
+        /* ==================== MODERN CSS VARIABLES & RESET ==================== */
+        :root {
+            --primary: #00796b; /* Deep Teal */
+            --primary-dark: #004d40;
+            --accent: #26a69a; /* Lighter Teal */
+            --bg-body: #f0f4f8;
+            --bg-sidebar: #ffffff;
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --transition: all 0.3s ease;
+            
+            /* Status Colors */
+            --instock-bg: #e6fffa;
+            --instock-text: #047481;
+            --lowstock-bg: #fffaf0;
+            --lowstock-text: #b7791f;
+            --danger-bg: #fff5f5;
+            --danger-text: #c53030;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+            font-size: 14px;
+        }
+
+        /* ==================== SIDEBAR ==================== */
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-sidebar);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1.5rem;
+            border-right: 1px solid #e1e8ed;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 3rem;
+        }
+
+        .nav-links { list-style: none; flex-grow: 1; }
+        .nav-links li { margin-bottom: 0.5rem; }
+        
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.8rem 1rem;
+            text-decoration: none;
+            color: var(--text-muted);
+            border-radius: 8px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: #e6f2f1;
+            color: var(--primary);
+        }
+
+        .nav-links a svg { width: 20px; height: 20px; }
+
+        .user-profile {
+            border-top: 1px solid #e1e8ed;
+            padding-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 40px; height: 40px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.2rem;
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 2rem 3rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        header h1 { font-size: 1.8rem; font-weight: 700; }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+        .icon-box {
+            width: 50px; height: 50px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .icon-box svg { width: 26px; height: 26px; }
+
+        .stat-info h3 { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+        .stat-info p { font-size: 1.6rem; font-weight: 700; color: var(--text-main); }
+
+        /* Inventory Section */
+        .inventory-section {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .search-wrapper { position: relative; flex: 1; max-width: 400px; }
+        .search-wrapper svg {
+            position: absolute; left: 12px; top: 50%;
+            transform: translateY(-50%);
+            width: 18px; height: 18px; color: var(--text-muted);
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            outline: none;
+            transition: var(--transition);
+        }
+        .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(38, 166, 154, 0.1); }
+
+        .btn {
+            padding: 0.75rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover { background-color: var(--primary-dark); }
+        .btn svg { width: 18px; height: 18px; }
+
+        /* Modern Table */
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th { text-align: left; color: var(--text-muted); font-weight: 600; padding: 1rem; border-bottom: 2px solid #e1e8ed; }
+        td { padding: 1.2rem 1rem; border-bottom: 1px solid #e1e8ed; vertical-align: middle;}
+        tr:hover td { background-color: #fcfdfe; }
+
+        .med-name { font-weight: 600; color: var(--text-main); font-size: 1rem;}
+        .med-cat { color: var(--text-muted); font-size: 0.85rem; margin-top: 2px;}
+
+        /* Status Badges */
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-instock { background-color: var(--instock-bg); color: var(--instock-text); }
+        .status-lowstock { background-color: var(--lowstock-bg); color: var(--lowstock-text); }
+        .status-outof { background-color: var(--danger-bg); color: var(--danger-text); }
+
+        /* Action Buttons in Table */
+        .action-btn {
+            background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 5px; border-radius: 4px;
+        }
+        .action-btn:hover { background-color: #eee; color: var(--text-main); }
+        .action-btn.delete:hover { background-color: var(--danger-bg); color: var(--danger-text); }
+        .action-btn svg { width: 18px; height: 18px; }
+
+        /* ==================== MODAL (Same logic, better design) ==================== */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+            justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-content {
+            background: white; padding: 2.5rem; border-radius: 16px;
+            width: 100%; max-width: 450px; position: relative;
+            box-shadow: var(--shadow-md);
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .modal-header h2 { color: var(--primary); }
+        .close-modal { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
+
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-main); }
+        .form-input {
+            width: 100%; padding: 0.75rem; border: 1px solid #e1e8ed; border-radius: 8px; outline: none;
+        }
+        .form-input:focus { border-color: var(--accent); }
+
+    </style>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="brand">
+            <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z"></path></svg>
+            MediFlow <span style="font-weight:300; opacity:0.7">Pro</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                Dashboard
+            </a></li>
+            <li><a href="#">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 11m8 4L4 11m0 0v10l8 4"></path></svg>
+                Inventory
+            </a></li>
+            <li><a href="#">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01m-.01 4h.01"></path></svg>
+                Reports
+            </a></li>
+        </ul>
+        <div class="user-profile">
+            <div class="avatar">A</div>
+            <div>
+                <div style="font-weight:600">Admin User</div>
+                <div style="color:var(--text-muted); font-size:0.8rem">Pharmacist</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <h1>Inventory Dashboard</h1>
+            <div style="color: var(--text-muted);">Wednesday, 25 Oct 2023</div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon-box" style="background-color: #e6f2f1; color: var(--primary);">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                </div>
+                <div class="stat-info">
+                    <h3>Total Medicines</h3>
+                    <p id="total-count">08</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon-box" style="background-color: var(--lowstock-bg); color: var(--lowstock-text);">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <div class="stat-info">
+                    <h3>Low Stock</h3>
+                    <p style="color: var(--lowstock-text);">02</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon-box" style="background-color: var(--danger-bg); color: var(--danger-text);">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div class="stat-info">
+                    <h3>Out of Stock</h3>
+                    <p style="color: var(--danger-text);">01</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Panel -->
+        <div class="inventory-section">
+            <div class="panel-header">
+                <div class="search-wrapper">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <input type="text" class="search-input" id="searchInput" onkeyup="searchMedicine()" placeholder="Search medicine by name or SKU...">
+                </div>
+                <button class="btn btn-primary" onclick="openModal()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    Add Medicine
+                </button>
+            </div>
+
+            <!-- Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Medicine Name</th>
+                        <th>SKU ID</th>
+                        <th>Stock</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th style="text-align:right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="medicineTable">
+                    <tr>
+                        <td>
+                            <div class="med-name">Paracetamol 650mg</div>
+                            <div class="med-cat">Analgesic | Strip</div>
+                        </td>
+                        <td><code style="background:#eee; padding:2px 5px; border-radius:4px">PRC650-109</code></td>
+                        <td style="font-weight:600">320</td>
+                        <td>₹35.00</td>
+                        <td><span class="status-badge status-instock">In Stock</span></td>
+                        <td style="text-align:right;">
+                            <button class="action-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 15.232l3.54 3.54m-3.54-3.54A8.96 8.96 0 0016 12c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c1.47 0 2.87-.35 4.11-1.01l3.54 3.54M12 12l.01-.01M16 12H12l3-3"></path></svg></button>
+                            <button class="action-btn delete"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="med-name">Amoxicillin Capsule</div>
+                            <div class="med-cat">Antibiotic | Bottle</div>
+                        </td>
+                        <td><code style="background:#eee; padding:2px 5px; border-radius:4px">AMX500-202</code></td>
+                        <td style="font-weight:600">18</td>
+                        <td>₹120.50</td>
+                        <td><span class="status-badge status-lowstock">Low Stock</span></td>
+                        <td style="text-align:right;">
+                            <button class="action-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 15.232l3.54 3.54m-3.54-3.54A8.96 8.96 0 0016 12c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c1.47 0 2.87-.35 4.11-1.01l3.54 3.54M12 12l.01-.01M16 12H12l3-3"></path></svg></button>
+                            <button class="action-btn delete"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="med-name">Insulin Pen</div>
+                            <div class="med-cat">Diabetes | Injectable</div>
+                        </td>
+                        <td><code style="background:#eee; padding:2px 5px; border-radius:4px">INS-PEN-55</code></td>
+                        <td style="font-weight:600">0</td>
+                        <td>₹1500.00</td>
+                        <td><span class="status-badge status-outof">Out of Stock</span></td>
+                        <td style="text-align:right;">
+                            <button class="action-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 15.232l3.54 3.54m-3.54-3.54A8.96 8.96 0 0016 12c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c1.47 0 2.87-.35 4.11-1.01l3.54 3.54M12 12l.01-.01M16 12H12l3-3"></path></svg></button>
+                            <button class="action-btn delete"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modern Modal -->
+    <div class="modal" id="medicineModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Medicine</h2>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="addMedForm" onsubmit="addNewMedicine(event)">
+                <div class="form-group">
+                    <label>Medicine Name</label>
+                    <input type="text" id="medName" class="form-input" required placeholder="e.g. Ibuprofen 400mg">
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <input type="text" id="medCategory" class="form-input" required placeholder="e.g. Painkiller">
+                    </div>
+                    <div class="form-group">
+                        <label>Form factor</label>
+                        <input type="text" id="medType" class="form-input" required placeholder="e.g. Tablet / Syrup">
+                    </div>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Stock Quantity</label>
+                        <input type="number" id="medStock" class="form-input" required placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" step="0.01" id="medPrice" class="form-input" required placeholder="0.00">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem; padding: 1rem;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    Confirm & Add to Inventory
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT (Same functionality) ==================== -->
+    <script>
+        // Modal logic
+        function openModal() { document.getElementById('medicineModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('medicineModal').style.display = 'none'; }
+
+        // Search logic
+        function searchMedicine() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let rows = document.querySelectorAll('#medicineTable tr');
+            rows.forEach(row => {
+                let medName = row.querySelector('.med-name').textContent.toLowerCase();
+                let sku = row.cells[1].textContent.toLowerCase();
+                if (medName.includes(input) || sku.includes(input)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Add Medicine logic
+        function addNewMedicine(event) {
+            event.preventDefault();
+            let name = document.getElementById('medName').value;
+            let category = document.getElementById('medCategory').value;
+            let type = document.getElementById('medType').value;
+            let stock = parseInt(document.getElementById('medStock').value);
+            let price = parseFloat(document.getElementById('medPrice').value).toFixed(2);
+
+            let table = document.getElementById('medicineTable');
+            let newRow = document.createElement('tr');
+
+            // Generic SKU
+            let sku = name.substring(0,3).toUpperCase() + Math.floor(100 + Math.random() * 900);
+
+            // Determine status
+            let statusClass = 'status-instock'; let statusText = 'In Stock';
+            if(stock === 0) { statusClass = 'status-outof'; statusText = 'Out of Stock';}
+            else if(stock < 20) { statusClass = 'status-lowstock'; statusText = 'Low Stock'; }
+
+            newRow.innerHTML = `
+                <td>
+                    <div class="med-name">${name}</div>
+                    <div class="med-cat">${category} | ${type}</div>
+                </td>
+                <td><code style="background:#eee; padding:2px 5px; border-radius:4px">${sku}</code></td>
+                <td style="font-weight:600">${stock}</td>
+                <td>₹${price}</td>
+                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                <td style="text-align:right;">
+                    <button class="action-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 15.232l3.54 3.54m-3.54-3.54A8.96 8.96 0 0016 12c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c1.47 0 2.87-.35 4.11-1.01l3.54 3.54M12 12l.01-.01M16 12H12l3-3"></path></svg></button>
+                    <button class="action-btn delete"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                </td>
+            `;
+            table.prepend(newRow); // Add to top
+            closeModal();
+            document.getElementById('addMedForm').reset();
+        }
+    </script>
+</body>
+</html>
