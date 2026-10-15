@@ -31,7 +31,11 @@ const RoleSelector = ({ onSelectRole }) => {
         <div className="cards-grid">
           {/* Chemist Card */}
           <div className="role-card chemist-card">
-            <div className="card-illustration">👨‍⚕️</div>
+            {/* <div className="card-illustration">👨‍⚕️</div>  RoleSelectorLogoChemist.jpg*/}
+
+            <div className="illustration-box chemist-bg">
+            <img src="RoleSelectorLogoChemist.jpg" alt="Chemist" className="card-illustration-img" />
+          </div>
             <h2>Chemist</h2>
             <p>Manage your pharmacy, connect with patients and grow your business.</p>
             <button 
@@ -44,7 +48,10 @@ const RoleSelector = ({ onSelectRole }) => {
 
           {/* Patient Card */}
           <div className="role-card patient-card">
-            <div className="card-illustration">👩‍🦰</div>
+            {/* <div className="card-illustration">👩‍🦰</div> */}
+            <div className="illustration-box chemist-bg">
+            <img src="RoleSelectorLogoPatient.jpg" alt="Chemist" className="card-illustration-img" />
+          </div>
             <h2>Patient</h2>
             <p>Find nearby pharmacies, get medicines conveniently, and manage security PINs.</p>
             <button 

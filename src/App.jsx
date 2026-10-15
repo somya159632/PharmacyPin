@@ -1,37 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RoleSelector from './components/auth/RoleSelector/RoleSelector';
 import AuthForm from './components/auth/AuthForm/AuthForm';
 import AuthModal from './components/auth/AuthModal/AuthModal';
+// import PatientDashboard from './pages/PatientDashboard/PatientDashboard';
+// import ChemistDashboard from './pages/ChemistDashboard/ChemistDashboard';
+import ChemistDashboard from './components/pages/ChemistDashboard/ChemistDashboard';
 import './App.css';
 
 function App() {
-  // currentView: 'role-selection', 'auth-form', 'guest-dashboard', 'chemist-dashboard', 'patient-dashboard'
   const [currentView, setCurrentView] = useState('role-selection');
   const [selectedRole, setSelectedRole] = useState(null);
-  
-  // State for Modal control (if triggering from headers/landing pages)
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Handle Role Selected from RoleSelector Component
-  const handleSelectRole = (role) => {
+  // Custom Navigation function with Browser History (Back button fix)
+  const navigateTo = (view, role = selectedRole) => {
     setSelectedRole(role);
-    setCurrentView('auth-form');
+    setCurrentView(view);
+    window.history.pushState({ view, role }, '');
   };
 
-  // Back to Role Selection
+  // Browser Back/Forward buttons handler
+  useEffect(() => {
+    window.history.replaceState({ view: 'role-selection', role: null }, '');
+
+    const handlePopState = (event) => {
+      if (event.state) {
+        setCurrentView(event.state.view || 'role-selection');
+        setSelectedRole(event.state.role || null);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Role selection
+  const handleSelectRole = (role) => {
+    navigateTo('auth-form', role);
+  };
+
+  // Back to roles screen
   const handleBackToRoles = () => {
-    setSelectedRole(null);
-    setCurrentView('role-selection');
+    navigateTo('role-selection', null);
   };
 
-  // Handle Guest Flow
+  // Guest access mode
   const handleGuestAccess = () => {
-    setCurrentView('guest-dashboard');
+    navigateTo('guest-dashboard', selectedRole);
+  };
+
+  // Login/Signup completion handler
+  const handleAuthSuccess = () => {
+    if (selectedRole === 'chemist') {
+      navigateTo('chemist-dashboard', selectedRole);
+    } else if (selectedRole === 'patient') {
+      navigateTo('patient-dashboard', selectedRole);
+    } else {
+      navigateTo('guest-dashboard', selectedRole);
+    }
+  };
+
+  // Logout reset handler
+  const handleLogout = () => {
+    navigateTo('role-selection', null);
   };
 
   return (
     <div className="app-container">
-      {/* 1. ROLE SELECTION SCREEN */}
+      {/* 1. Role Selection Screen */}
       {currentView === 'role-selection' && (
         <RoleSelector 
           onSelectRole={handleSelectRole} 
@@ -39,24 +75,33 @@ function App() {
         />
       )}
 
-      {/* 2. AUTH FORM SCREEN */}
+      {/* 2. Authentication Form */}
       {currentView === 'auth-form' && (
         <AuthForm 
           role={selectedRole} 
           onBack={handleBackToRoles} 
           onGuestAccess={handleGuestAccess} 
+          onAuthSuccess={handleAuthSuccess}
         />
       )}
 
-      {/* 3. DUMMY DASHBOARD VIEW (Guest / Logged In State) */}
-      {(currentView === 'guest-dashboard' || currentView === 'dashboard') && (
+      {/* 3. Patient Dashboard View */}
+      {currentView === 'patient-dashboard' && (
+        <PatientDashboard onLogout={handleLogout} />
+      )}
+
+      {/* 4. Chemist Dashboard View */}
+      {currentView === 'chemist-dashboard' && (
+        <ChemistDashboard onLogout={handleLogout} />
+      )}
+
+      {/* 5. Guest Preview Mode */}
+      {currentView === 'guest-dashboard' && (
         <div className="dashboard-preview">
           <header className="dash-header">
             <h2 className="dash-title">Pharmacypin Preview</h2>
             <div className="dash-actions">
-              <span className="badge">
-                {currentView === 'guest-dashboard' ? 'Guest Mode' : `${selectedRole} Account`}
-              </span>
+              <span className="badge">Guest Mode</span>
               <button className="open-modal-btn" onClick={() => setIsModalOpen(true)}>
                 Login / Switch Account
               </button>
@@ -65,22 +110,18 @@ function App() {
               </button>
             </div>
           </header>
-
           <main className="dash-content">
             <h3>Welcome to Pharmacypin! 👋</h3>
-            <p>
-              {currentView === 'guest-dashboard' 
-                ? 'Aap Guest User ke tarah platform explore kar rahe hain. Complete features ke liye Login/Sign Up karein.' 
-                : `Logged in as ${selectedRole}.`}
-            </p>
+            <p>Guest view mode me hain. Dashboard access ke liye Login karein.</p>
           </main>
         </div>
       )}
 
-      {/* GLOBAL AUTH MODAL COMPONENT */}
+      {/* Global Auth Switcher Modal */}
       <AuthModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
+        onSelectRole={handleSelectRole}
       />
     </div>
   );

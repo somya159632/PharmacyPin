@@ -45,12 +45,16 @@
   font-weight: 500;
 }
 
-/* Main Hero Section */
-.role-main-content {
+/* Main Hero Section (FIXED CLASS NAME & CENTERING) */
+.main-content {
   max-width: 850px;
   margin: 30px auto;
   text-align: center;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;    /* 👈 Badge aur headings ko center me align karne ke liye */
+  justify-content: center;
 }
 
 .welcome-badge {
@@ -72,6 +76,8 @@
   color: #0f172a;
   margin-bottom: 10px;
   letter-spacing: -0.5px;
+  text-align: center;
+  width: 100%;
 }
 
 .main-heading span {
@@ -84,6 +90,7 @@
   max-width: 580px;
   margin: 0 auto 40px auto;
   line-height: 1.5;
+  text-align: center;
 }
 
 /* 2 Cards Grid Layout */
@@ -93,6 +100,7 @@
   gap: 28px;
   max-width: 800px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .role-card {
@@ -113,17 +121,23 @@
   border-color: #38bdf8;
 }
 
-.card-illustration {
-  font-size: 44px;
-  margin-bottom: 20px;
-  background: #f0f9ff;
-  width: 84px;
-  height: 84px;
+/* Card Illustration Image Frame */
+.illustration-box {
+  width: 100%;
+  height: 150px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 22px;
-  border: 1px solid #bae6fd;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background-color: #f1f5f9;
+}
+
+.card-illustration-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 👈 Border-box fill karne ke liye 'cover' use karein */
 }
 
 .role-card h2 {

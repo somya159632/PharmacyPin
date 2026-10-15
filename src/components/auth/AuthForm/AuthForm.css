@@ -1,295 +1,287 @@
-
-/* Page Layout */
 .auth-form-page {
   display: flex;
   min-height: 100vh;
-  background-color: #ffffff;
+  width: 100%;
+  background-color: #f8fafc;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  box-sizing: border-box;
 }
 
-/* Left Branding Banner */
+/* --- LEFT BRANDING BANNER --- */
 .auth-banner {
-  width: 42%;
-  padding: 44px 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
-
-.chemist-theme {
-  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-  color: #0369a1;
-}
-
-.patient-theme {
-  background: linear-gradient(135deg, #eff6ff 0%, #bfdbfe 100%);
-  color: #1d4ed8;
-}
-
-/* Back Link & Logo Header */
-.back-link {
-  background: none;
-  border: none;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  color: inherit;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  transition: opacity 0.2s ease;
-}
-
-.back-link:hover {
-  opacity: 0.8;
-}
-
-.banner-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 24px;
-}
-
-.logo-img {
-  height: 40px;
-  width: auto;
-  object-fit: contain;
-}
-
-.logo-text {
-  font-size: 24px;
-  font-weight: 800;
-  color: #0f172a;
-  letter-spacing: -0.5px;
-}
-
-/* Banner Content Body */
-.banner-content h1 {
-  font-size: 34px;
-  font-weight: 800;
-  margin: 12px 0;
-  color: #0f172a;
-  line-height: 1.25;
-}
-
-.banner-content p {
-  font-size: 15px;
-  color: #334155;
-  line-height: 1.55;
-  margin-bottom: 28px;
-}
-
-.banner-features {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.feature-item {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(4px);
-  padding: 12px 18px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #0f172a;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-.banner-footer {
-  font-size: 13px;
-  opacity: 0.75;
-}
-
-/* Right Form Side Container */
-.auth-form-container {
-  width: 58%;
-  padding: 40px 60px;
+  flex: 0 0 45%;
+  padding: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 580px;
+  position: relative;
+  color: #ffffff;
+}
+
+.auth-banner.chemist-bg {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+}
+
+.auth-banner.patient-bg {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.banner-content {
+  max-width: 480px;
   margin: 0 auto;
-  box-sizing: border-box;
 }
 
-.form-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 24px;
-}
-
-.form-header h2 {
-  font-size: 24px;
-  font-weight: 800;
-  color: #0f172a;
-  margin: 0;
-}
-
-.form-subtitle {
-  font-size: 13px;
-  color: #64748b;
-  margin-top: 4px;
-}
-
-/* Toggle Switch (Sign Up vs Login) */
-.tab-toggle {
-  background: #f1f5f9;
-  padding: 4px;
-  border-radius: 10px;
-  display: flex;
-  gap: 4px;
-}
-
-.tab-toggle button {
-  border: none;
+.role-tag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
   padding: 6px 14px;
-  border-radius: 8px;
+  border-radius: 20px;
   font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  background: transparent;
-  color: #64748b;
-  transition: all 0.2s ease;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  color: #ffffff;
 }
 
-.tab-toggle button.active {
-  background: #ffffff;
-  color: #0284c7;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+.banner-content h1 {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 16px;
+  color: #ffffff;
 }
 
-/* Input Fields Styling */
-.actual-form {
+.banner-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 36px;
+}
+
+.feature-list {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  margin-bottom: 40px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+}
+
+.copyright {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  bottom: 30px;
+  left: 60px;
+}
+
+/* --- RIGHT FORM SECTION --- */
+.auth-form-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  background: #ffffff;
+  overflow-y: auto;
+}
+
+.form-header {
+  margin-bottom: 32px;
+}
+
+.back-link {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 16px;
+  display: inline-block;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #0f172a;
+}
+
+.form-header h2 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+}
+
+.form-header p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* --- ACTUAL FORM FIELDS --- */
+.actual-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 460px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
 }
 
 .form-group label {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: #334155;
 }
 
 .form-group input {
-  padding: 11px 14px;
+  padding: 12px 16px;
+  border: 1.5px solid #e2e8f0;
   border-radius: 10px;
-  border: 1.5px solid #cbd5e1;
   font-size: 14px;
+  color: #0f172a;
+  background-color: #f8fafc;
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .form-group input:focus {
+  background-color: #ffffff;
   border-color: #0284c7;
-  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
 }
 
-/* Form Action Buttons */
+/* SUBMIT BUTTON */
 .submit-btn {
-  margin-top: 8px;
-  padding: 13px;
-  color: #ffffff;
+  width: 100%;
+  padding: 14px;
   border: none;
   border-radius: 10px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
+  color: #ffffff;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
+  margin-top: 10px;
+  transition: transform 0.1s, opacity 0.2s;
 }
 
 .submit-btn:active {
   transform: scale(0.99);
 }
 
-.chemist-submit {
-  background: #0284c7;
+.submit-btn.chemist-submit {
+  background-color: #0284c7;
 }
 
-.chemist-submit:hover {
-  background: #0369a1;
+.submit-btn.chemist-submit:hover {
+  background-color: #0369a1;
 }
 
-.patient-submit {
-  background: #2563eb;
+.submit-btn.patient-submit {
+  background-color: #2563eb;
 }
 
-.patient-submit:hover {
-  background: #1d4ed8;
+.submit-btn.patient-submit:hover {
+  background-color: #1d4ed8;
 }
 
-/* Divider Line */
+/* --- FORM FOOTER --- */
+.form-footer {
+  max-width: 460px;
+  margin-top: 24px;
+  text-align: center;
+}
+
+.form-footer p {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.toggle-auth-btn {
+  background: none;
+  border: none;
+  color: #0284c7;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
 .divider {
   display: flex;
   align-items: center;
   text-align: center;
-  margin: 6px 0 2px 0;
-  color: #94a3b8;
-  font-size: 12px;
-  font-weight: 600;
+  margin: 20px 0;
+  color: #cbd5e1;
 }
 
-.divider::before,
-.divider::after {
+.divider::before, .divider::after {
   content: '';
   flex: 1;
   border-bottom: 1px solid #e2e8f0;
 }
 
 .divider span {
-  padding: 0 10px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
 }
 
-/* Guest Button Styling */
 .guest-btn {
   width: 100%;
-  padding: 11px;
-  background: #f8fafc;
+  background: transparent;
+  border: 1.5px solid #e2e8f0;
   color: #475569;
-  border: 1px solid #cbd5e1;
+  padding: 12px;
   border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
 }
 
 .guest-btn:hover {
-  background: #f1f5f9;
+  background: #f8fafc;
+  border-color: #cbd5e1;
   color: #0f172a;
-  border-color: #94a3b8;
 }
 
-/* Responsive Styles for Mobile & Tablet */
-@media (max-width: 900px) {
+/* RESPONSIVE LAYOUT */
+@media (max-width: 960px) {
   .auth-form-page {
     flex-direction: column;
   }
-  
-  .auth-banner, 
+
+  .auth-banner {
+    flex: none;
+    padding: 40px 24px;
+  }
+
   .auth-form-container {
-    width: 100%;
-    padding: 24px;
+    padding: 40px 24px;
   }
 
-  .banner-content h1 {
-    font-size: 28px;
-  }
-
-  .form-header {
-    flex-direction: column;
-    gap: 12px;
+  .copyright {
+    position: static;
+    margin-top: 20px;
   }
 }
-

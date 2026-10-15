@@ -1,159 +1,184 @@
 import React, { useState } from 'react';
 import './AuthForm.css';
 
-
-const AuthForm = ({ role, onBack, onGuestAccess }) => {
+const AuthForm = ({ role, onBack, onGuestAccess, onAuthSuccess }) => {
   const [isLogin, setIsLogin] = useState(false);
   const isChemist = role === 'chemist';
 
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    licenseNumber: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onAuthSuccess) {
+      onAuthSuccess();
+    }
+  };
+
   return (
     <div className="auth-form-page">
-      {/* Left Branding Banner */}
-      <div className={`auth-banner ${isChemist ? 'chemist-theme' : 'patient-theme'}`}>
-        <div>
-          <button className="back-link" onClick={onBack}>
-            ← Back to Role Selection
-          </button>
-
-          <div className="banner-logo flex items-center gap-2 mt-6">
-            <img src="/logo.png" alt="Pharmacypin Logo" className="logo-img" />
-            <span className="logo-text font-bold text-2xl">Pharmacypin</span>
-          </div>
-        </div>
-
+      {/* Left Banner */}
+      <div className={`auth-banner ${isChemist ? 'chemist-bg' : 'patient-bg'}`}>
         <div className="banner-content">
-          <span className="banner-tag">
-            {isChemist ? 'Chemist Portal' : 'Patient Portal'}
-          </span>
-          <h1>
-            {isChemist ? 'Trusted Pharmacy Partner' : 'Your Health, Our Priority'}
-          </h1>
+          <span className="role-tag">{isChemist ? 'Chemist Portal' : 'Patient Portal'}</span>
+          <h1>{isChemist ? 'Trusted Pharmacy Partner' : 'Your Health, Simplified'}</h1>
           <p>
             {isChemist 
-              ? 'Manage your pharmacy, connect with patients and grow your business with secure PIN verification.' 
-              : 'Find nearby pharmacies, get medicines conveniently, and manage your secure health PINs.'}
+              ? 'Manage your pharmacy, connect with patients and grow your business with secure PIN verification.'
+              : 'Find verified local pharmacies near you and verify prescriptions instantly using secure PIN.'}
           </p>
 
-          <div className="banner-features">
+          <div className="feature-list">
             <div className="feature-item">
-              <span>{isChemist ? '✓ Verified Drug Licensing' : '📍 Nearby Pharmacies'}</span>
+              <span>✓</span> {isChemist ? 'Verified Drug Licensing' : 'Instant Pharmacy Matching'}
             </div>
             <div className="feature-item">
-              <span>{isChemist ? '📦 Smart Inventory Sync' : '💊 Easy Medicine Search'}</span>
+              <span>📦</span> {isChemist ? 'Smart Inventory Sync' : 'Digital Prescription Vault'}
             </div>
             <div className="feature-item">
-              <span>🔒 Encrypted PIN Security</span>
+              <span>🔒</span> Encrypted PIN Security
             </div>
           </div>
-        </div>
 
-        <div className="banner-footer">
-          <p>© 2026 Pharmacypin. All rights reserved.</p>
+          <p className="copyright">© 2026 Pharmacypin. All rights reserved.</p>
         </div>
       </div>
 
-      {/* Right Form Container */}
+      {/* Right Form */}
       <div className="auth-form-container">
         <div className="form-header">
-          <div>
-            <h2>
-              {isLogin 
-                ? (isChemist ? 'Welcome Back, Chemist' : 'Welcome Back, Patient') 
-                : (isChemist ? 'Create Chemist Account' : 'Create Patient Account')}
-            </h2>
-            <p className="form-subtitle">
-              {isLogin ? 'Enter your credentials to access your portal' : 'Fill in the details below to get started'}
-            </p>
-          </div>
-
-          {/* Toggle Login vs Sign Up */}
-          <div className="tab-toggle">
-            <button 
-              type="button"
-              className={!isLogin ? 'active' : ''} 
-              onClick={() => setIsLogin(false)}
-            >
-              Sign Up
-            </button>
-            <button 
-              type="button"
-              className={isLogin ? 'active' : ''} 
-              onClick={() => setIsLogin(true)}
-            >
-              Login
-            </button>
-          </div>
+          <button type="button" className="back-link" onClick={onBack}>
+            ← Change Role
+          </button>
+          <h2>{isLogin ? 'Welcome Back' : (isChemist ? 'Register Pharmacy' : 'Create Patient Account')}</h2>
+          <p>
+            {isLogin ? 'Enter your credentials to access your dashboard' : 'Fill in the details below to get started'}
+          </p>
         </div>
 
-        {/* Dynamic Form Body */}
-        <form onSubmit={(e) => e.preventDefault()} className="actual-form">
+        <form onSubmit={handleSubmit} className="actual-form">
           {!isLogin && (
             <div className="form-group">
-              <label>Full Name</label>
-              <input type="text" placeholder="Enter your full name" required />
-            </div>
-          )}
-
-          {!isLogin && isChemist && (
-            <div className="form-group">
-              <label>Pharmacy Name</label>
-              <input type="text" placeholder="Enter pharmacy business name" required />
+              <label>{isChemist ? 'Pharmacy Name' : 'Full Name'}</label>
+              <input
+                type="text"
+                name="name"
+                required
+                placeholder={isChemist ? 'e.g. Dixit Medical Store' : 'e.g. Somya Dixit'}
+                value={formData.name}
+                onChange={handleChange}
+              />
             </div>
           )}
 
           <div className="form-group">
             <label>Email Address</label>
-            <input type="email" placeholder="name@example.com" required />
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="name@example.com"
+              value={formData.email}
+              onChange={handleChange}
+            />
           </div>
 
-          <div className="form-group">
-            <label>Phone Number</label>
-            <input type="tel" placeholder="+91 9876543210" required />
-          </div>
+          {!isLogin && (
+            <div className="form-group">
+              <label>Phone Number</label>
+              <input
+                type="tel"
+                name="phone"
+                required
+                placeholder="Enter 10-digit mobile number"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+            </div>
+          )}
 
           {!isLogin && isChemist && (
             <div className="form-group">
               <label>Drug License Number</label>
-              <input type="text" placeholder="e.g. DL-XXXXX-2026" required />
+              <input
+                type="text"
+                name="licenseNumber"
+                required
+                placeholder="e.g. DL-2026-XXXXX"
+                value={formData.licenseNumber}
+                onChange={handleChange}
+              />
             </div>
           )}
 
           <div className="form-group">
             <label>Password</label>
-            <input type="password" placeholder="••••••••" required />
+            <input
+              type="password"
+              name="password"
+              required
+              placeholder="••••••••"
+              value={formData.password}
+              onChange={handleChange}
+            />
           </div>
 
           {!isLogin && (
             <div className="form-group">
               <label>Confirm Password</label>
-              <input type="password" placeholder="••••••••" required />
+              <input
+                type="password"
+                name="confirmPassword"
+                required
+                placeholder="••••••••"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+              />
             </div>
           )}
 
-          {/* Submit Button */}
-          <button type="submit" className={`submit-btn ${isChemist ? 'chemist-submit' : 'patient-submit'}`}>
+          <button 
+            type="submit" 
+            className={`submit-btn ${isChemist ? 'chemist-submit' : 'patient-submit'}`}
+          >
             {isLogin 
               ? 'Login to Account' 
               : (isChemist ? 'Create Chemist Account →' : 'Create Patient Account →')}
           </button>
+        </form>
 
-          {/* Divider */}
-          <div className="divider">
-            <span>OR</span>
-          </div>
+        <div className="form-footer">
+          <p>
+            {isLogin ? "Don't have an account? " : "Already have an account? "}
+            <button 
+              type="button" 
+              className="toggle-auth-btn" 
+              onClick={() => setIsLogin(!isLogin)}
+            >
+              {isLogin ? 'Sign Up' : 'Log In'}
+            </button>
+          </p>
 
-          {/* Guest Access Button */}
-          <button 
-            type="button" 
-            className="guest-btn"
-            onClick={onGuestAccess}
-          >
+          <div className="divider"><span>OR</span></div>
+
+          <button type="button" className="guest-btn" onClick={onGuestAccess}>
             Continue as Guest (Explore App) →
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );
 };
 
+// 🔴 Fix: Adding the missing default export!
 export default AuthForm;
