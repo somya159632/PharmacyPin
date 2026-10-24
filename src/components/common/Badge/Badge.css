@@ -1,0 +1,48 @@
+.pharmacypin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  white-space: nowrap;
+}
+
+.pharmacypin-badge.success {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.pharmacypin-badge.warning {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.pharmacypin-badge.error {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.pharmacypin-badge.info {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.pharmacypin-badge.chemist {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.pharmacypin-badge.patient {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.pharmacypin-badge.neutral {
+  background: #f1f5f9;
+  color: #475569;
+}

@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+// import AddMedicineModal from '../../components/common/AddMedicineModal/AddMedicineModal';
+import AddMedicineModal from '../../chemist/AddMedicineModal';
+import ExpiryAlertCard from '../../chemist/ExpiryAlertCard';
+import LiveRequestCard from '../../chemist/LiveRequestCard';
 import './ChemistDashboard.css';
 
 const ChemistDashboard = ({ onLogout }) => {
   const [pinInput, setPinInput] = useState('');
   const [verificationResult, setVerificationResult] = useState(null);
   const [isStoreOpen, setIsStoreOpen] = useState(true);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // 👈 Modal open/close state
 
   // Mock list of active patient queue items
   const [pendingOrders, setPendingOrders] = useState([
@@ -56,7 +61,6 @@ const ChemistDashboard = ({ onLogout }) => {
     setVerificationResult(null);
   };
 
-  // Fixed map logic to remove yellow syntax warning
   const handleApproveOrder = (orderId) => {
     setPendingOrders((prev) => {
       return prev.map((order) => {
@@ -66,6 +70,10 @@ const ChemistDashboard = ({ onLogout }) => {
         return order;
       });
     });
+  };
+
+  const handleAddMedicine = (newMed) => {
+    console.log('New Medicine Batch Added:', newMed);
   };
 
   return (
@@ -195,7 +203,11 @@ const ChemistDashboard = ({ onLogout }) => {
               <h2>Inventory Controls</h2>
             </div>
             <div className="chemist-action-btns">
-              <button type="button" className="action-tile">
+              <button 
+                type="button" 
+                className="action-tile"
+                onClick={() => setIsAddModalOpen(true)} // 👈 Opens Add Medicine Modal
+              >
                 <span className="tile-icon">➕</span>
                 <span>Update Stock Batch</span>
               </button>
@@ -261,6 +273,13 @@ const ChemistDashboard = ({ onLogout }) => {
           </div>
         </section>
       </main>
+
+      {/* Render Add Medicine Modal */}
+      <AddMedicineModal 
+        isOpen={isAddModalOpen} 
+        onClose={() => setIsAddModalOpen(false)} 
+        onAddMedicine={handleAddMedicine} 
+      />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import AuthModal from './components/auth/AuthModal/AuthModal';
 // import PatientDashboard from './pages/PatientDashboard/PatientDashboard';
 // import ChemistDashboard from './pages/ChemistDashboard/ChemistDashboard';
 import ChemistDashboard from './components/pages/ChemistDashboard/ChemistDashboard';
+import PatientDashboard from './components/pages/PatientDashboard/PatientDashboard';
 import './App.css';
 
 function App() {

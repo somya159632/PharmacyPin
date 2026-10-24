@@ -5,5 +5,89 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #f8fafc;
+  background-color: #242e38; /* Matching dark theme background */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #e2e8f0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Optional Auth Card Container Styling */
+.auth-card {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 
+    0 15px 30px -5px rgba(0, 0, 0, 0.4),
+    inset 0 2px 4px 0 rgba(255, 255, 255, 0.03);
+  box-sizing: border-box;
+}
+
+.auth-card h1, 
+.auth-card h2 {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.auth-card p {
+  color: #94a3b8;
+  font-size: 14px;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+/* Auth Form Inputs */
+.auth-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: #0f172a;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  margin-bottom: 16px;
+}
+
+.auth-input::placeholder {
+  color: #64748b;
+}
+
+.auth-input:focus {
+  border-color: #38bdf8;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+/* Auth Submit Button */
+.auth-btn {
+  width: 100%;
+  padding: 13px;
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+  transition: background 0.2s ease, transform 0.1s ease;
+  margin-top: 8px;
+}
+
+.auth-btn:hover {
+  background: #0369a1;
+}
+
+.auth-btn:active {
+  transform: scale(0.98);
 }
